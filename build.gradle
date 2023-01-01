@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+group 'com.josemarcellio.jlogin'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    implementation 'org.bstats:bstats-bukkit:3.0.0'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.1'
+    compileOnly 'org.apache.logging.log4j:log4j-core:2.19.0'
+}
+
+tasks {
+
+    shadowJar {
+        relocate("org.bstats", "com.josemarcellio.jlogin.lib.bstats")
+    }
+
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+}

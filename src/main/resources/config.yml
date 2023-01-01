@@ -1,0 +1,10 @@
+Messages:
+  Already-Logged-In: "&7[&bJLogin&7] &fYou are already logged in!"
+  Already-Registered: "&7[&bJLogin&7] &fYou are already registered!"
+  Successfully-Logged-In: "&7[&bJLogin&7] &fSuccessfully logged in!"
+  Successfully-Registered: "&7[&bJLogin&7] &fSuccessfully registered!"
+  Wrong-Password: "&7[&bJLogin&7] &fWrong password! Please try again!"
+  Login-Usage: "&7[&bJLogin&7] &fUsage: /login <password>"
+  Registered-Usage: "&7[&bJLogin&7] &fUsage: /register <password>"
+  Not-Registered: "&7[&bJLogin&7] &fYou are not registered! Please type /register <password> to register"
+  Not-Logged-In: "&7[&bJLogin&7] &fYou are not logged in! Please type /login <password> to log in"
