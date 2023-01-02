@@ -7,12 +7,25 @@ import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.message.Message;
 
-public class Log4JFilter implements Filter {
-    public Result filter(LogEvent record) {
+public class Log4JFilter
+        implements Filter {
+
+    public Result filter(
+            LogEvent record) {
+
         try {
-            if(record != null && record.getMessage() != null) {
-                String npe = record.getMessage().getFormattedMessage().toLowerCase();
-                return !npe.contains("issued server command:")?Result.NEUTRAL:(!npe.contains("/login ") && !npe.contains("/register ")?Result.NEUTRAL:Result.DENY);
+            if(record != null
+                    && record.getMessage() != null) {
+
+                String npe = record.getMessage()
+                        .getFormattedMessage().toLowerCase();
+
+                return !npe.contains("issued server command:")
+                        ?Result.NEUTRAL:(!npe.contains("/login ")
+                        && !npe.contains("/register ")
+                        && !npe.contains("/changepassword ")
+                        && !npe.contains("/jlogin ")
+                        ?Result.NEUTRAL:Result.DENY) ;
             } else {
                 return Result.NEUTRAL;
             }
@@ -21,13 +34,21 @@ public class Log4JFilter implements Filter {
         }
     }
 
-    public Result filter(Logger arg0, Level arg1, Marker arg2, String message, Object... arg4) {
+    public Result filter(
+            Logger arg0, Level arg1, Marker arg2,
+            String message, Object... arg4) {
+
         try {
             if(message == null) {
                 return Result.NEUTRAL;
             } else {
                 String npe = message.toLowerCase();
-                return !npe.contains("issued server command:")?Result.NEUTRAL:(!npe.contains("/login ") && !npe.contains("/register ")?Result.NEUTRAL:Result.DENY);
+                return !npe.contains("issued server command:")
+                        ?Result.NEUTRAL:(!npe.contains("/login ")
+                        && !npe.contains("/register ")
+                        && !npe.contains("/changepassword ")
+                        && !npe.contains("/jlogin ")
+                        ?Result.NEUTRAL:Result.DENY);
             }
         } catch (NullPointerException var7) {
             return Result.NEUTRAL;
@@ -35,75 +56,136 @@ public class Log4JFilter implements Filter {
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2, Object p3) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2, Object p3, Object p4) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2, Object p3, Object p4,
+            Object p5) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2, Object p3, Object p4,
+            Object p5, Object p6) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2, Object p3, Object p4,
+            Object p5, Object p6, Object p7) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7, Object p8) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2, Object p3, Object p4,
+            Object p5, Object p6, Object p7,
+            Object p8) {
+
         return null;
     }
 
     @Override
-    public Result filter(Logger logger, Level level, Marker marker, String message, Object p0, Object p1, Object p2, Object p3, Object p4, Object p5, Object p6, Object p7, Object p8, Object p9) {
+    public Result filter(
+            Logger logger, Level level, Marker marker,
+            String message, Object p0, Object p1,
+            Object p2, Object p3, Object p4,
+            Object p5, Object p6, Object p7,
+            Object p8, Object p9) {
+
         return null;
     }
 
-    public Result filter(Logger arg0, Level arg1, Marker arg2, Object message, Throwable arg4) {
+    public Result filter(
+            Logger arg0, Level arg1, Marker arg2,
+            Object message, Throwable arg4) {
+
         try {
             if(message == null) {
                 return Result.NEUTRAL;
             } else {
                 String npe = message.toString().toLowerCase();
-                return !npe.contains("issued server command:")?Result.NEUTRAL:(!npe.contains("/login ") && !npe.contains("/register ")?Result.NEUTRAL:Result.DENY);
+                return !npe.contains("issued server command:")
+                        ?Result.NEUTRAL:(!npe.contains("/login ")
+                        && !npe.contains("/register ")
+                        && !npe.contains("/changepassword ")
+                        && !npe.contains("/jlogin ")
+                        ?Result.NEUTRAL:Result.DENY);
             }
         } catch (NullPointerException var7) {
             return Result.NEUTRAL;
         }
     }
 
-    public Result filter(Logger arg0, Level arg1, Marker arg2, Message message, Throwable arg4) {
+    public Result filter(
+            Logger arg0, Level arg1, Marker arg2,
+            Message message, Throwable arg4) {
+
         try {
             if(message == null) {
                 return Result.NEUTRAL;
             } else {
                 String npe = message.getFormattedMessage().toLowerCase();
-                return !npe.contains("issued server command:")?Result.NEUTRAL:(!npe.contains("/login ") && !npe.contains("/register ")?Result.NEUTRAL:Result.DENY);
+                return !npe.contains("issued server command:")
+                        ?Result.NEUTRAL:(!npe.contains("/login ")
+                        && !npe.contains("/register ")
+                        && !npe.contains("/changepassword ")
+                        && !npe.contains("/jlogin ")
+                        ?Result.NEUTRAL:Result.DENY);
             }
         } catch (NullPointerException var7) {
             return Result.NEUTRAL;

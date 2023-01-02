@@ -1,6 +1,8 @@
 package com.josemarcellio.jlogin;
 
 import com.josemarcellio.jlogin.api.status.Status;
+import com.josemarcellio.jlogin.command.ChangePasswordCommand;
+import com.josemarcellio.jlogin.command.JLoginCommand;
 import com.josemarcellio.jlogin.command.LoginCommand;
 import com.josemarcellio.jlogin.command.RegisterCommand;
 import com.josemarcellio.jlogin.listener.*;
@@ -36,11 +38,23 @@ public class JLogin extends JavaPlugin {
 
         RegisterCommand registerCommand =
                 new RegisterCommand(this);
-        getCommand("register").setExecutor(registerCommand);
+        getCommand("register").setExecutor(
+                registerCommand);
 
         LoginCommand loginCommand =
                 new LoginCommand(this);
-        getCommand("login").setExecutor(loginCommand);
+        getCommand("login").setExecutor(
+                loginCommand);
+
+        ChangePasswordCommand changePasswordCommand =
+                new ChangePasswordCommand(this);
+        getCommand("changepassword").setExecutor(
+                changePasswordCommand);
+
+        JLoginCommand jLoginCommand =
+                new JLoginCommand(this);
+        getCommand("jlogin").setExecutor(
+                jLoginCommand);
 
         BukkitListener bukkitListener =
                 new BukkitListener(this);

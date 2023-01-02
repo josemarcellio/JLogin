@@ -18,7 +18,9 @@ public class JLoginListener
     }
 
     @EventHandler
-    public void onJLogin(JLoginEvent event) {
+    public void onJLogin(
+            JLoginEvent event) {
+
         Player player = event.getPlayer();
 
         new JLoginRunnable(plugin, player, event)

@@ -9,10 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 
 public class BukkitListener
         implements Listener {
@@ -59,7 +56,8 @@ public class BukkitListener
                 .get(player) == Status.PRE) {
 
             if (!event.getMessage().startsWith("/register")
-                    && !event.getMessage().startsWith("/login")) {
+                    && !event.getMessage().startsWith("/login")
+                    && !event.getMessage().startsWith("/changepassword")) {
 
                 event.setCancelled(true);
             }
@@ -95,6 +93,45 @@ public class BukkitListener
     @EventHandler
     public void onBlockBreak(
             BlockBreakEvent event) {
+
+        Player player = event.getPlayer();
+
+        if (plugin.getLoginStatus()
+                .get(player) == Status.PRE) {
+
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerPickupItem(
+            PlayerPickupItemEvent event) {
+
+        Player player = event.getPlayer();
+
+        if (plugin.getLoginStatus()
+                .get(player) == Status.PRE) {
+
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDropItem(
+            PlayerDropItemEvent event) {
+
+        Player player = event.getPlayer();
+
+        if (plugin.getLoginStatus()
+                .get(player) == Status.PRE) {
+
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(
+            PlayerInteractEvent event) {
 
         Player player = event.getPlayer();
 
