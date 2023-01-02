@@ -1,7 +1,10 @@
 package com.josemarcellio.jlogin.command;
 
 import com.josemarcellio.jlogin.JLogin;
+import com.josemarcellio.jlogin.api.events.JLoginEvent;
+import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.MessageDigestUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -41,7 +44,7 @@ public class RegisterCommand
 
             FileConfiguration configuration = plugin.getConfig();
 
-            if (plugin.getLoginPlayer().containsKey(player)) {
+            if (plugin.getLoginStatus().get(player) != Status.PRE) {
 
                 String alreadyLoggedIn = configuration
                         .getString("Messages.Already-Logged-In");
@@ -78,8 +81,8 @@ public class RegisterCommand
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    plugin.getLoginPlayer().put(
-                            player, true);
+                    plugin.getLoginStatus().put(
+                            player, Status.REGISTER);
 
                     String successfullyRegistered = configuration
                             .getString("Messages.Successfully-Registered");
@@ -87,6 +90,10 @@ public class RegisterCommand
                     player.sendMessage(
                             ChatColor.translateAlternateColorCodes('&',
                                     successfullyRegistered));
+
+                    JLoginEvent jloginEvent = new JLoginEvent(plugin, player, Status.REGISTER);
+                    Bukkit.getServer().getPluginManager().callEvent(jloginEvent);
+
                 } else {
 
                     String registeredUsage = configuration

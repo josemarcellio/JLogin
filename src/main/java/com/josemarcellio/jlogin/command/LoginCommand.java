@@ -1,7 +1,10 @@
 package com.josemarcellio.jlogin.command;
 
 import com.josemarcellio.jlogin.JLogin;
+import com.josemarcellio.jlogin.api.events.JLoginEvent;
+import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.MessageDigestUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -41,7 +44,7 @@ public class LoginCommand
 
             FileConfiguration configuration = plugin.getConfig();
 
-            if (plugin.getLoginPlayer().containsKey(player)) {
+            if (plugin.getLoginStatus().get(player) != Status.PRE) {
 
                 String alreadyLoggedIn = configuration
                         .getString("Messages.Already-Logged-In");
@@ -71,8 +74,8 @@ public class LoginCommand
                     if (Arrays.equals(storedHashedPassword,
                             enteredHashedPassword)) {
 
-                        plugin.getLoginPlayer().put(
-                                player, true);
+                        plugin.getLoginStatus().put(
+                                player, Status.LOGIN);
 
                         String successfullyLoggedIn = configuration
                                 .getString("Messages.Successfully-Logged-In");
@@ -80,6 +83,9 @@ public class LoginCommand
                         player.sendMessage(
                                 ChatColor.translateAlternateColorCodes('&',
                                         successfullyLoggedIn));
+
+                        JLoginEvent jloginEvent = new JLoginEvent(plugin, player, Status.LOGIN);
+                        Bukkit.getServer().getPluginManager().callEvent(jloginEvent);
 
                     } else {
 

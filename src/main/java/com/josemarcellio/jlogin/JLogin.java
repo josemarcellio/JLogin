@@ -1,8 +1,10 @@
 package com.josemarcellio.jlogin;
 
+import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.command.LoginCommand;
 import com.josemarcellio.jlogin.command.RegisterCommand;
 import com.josemarcellio.jlogin.listener.*;
+import com.josemarcellio.jlogin.listener.bukkit.BukkitListener;
 import com.josemarcellio.jlogin.log4j.Log4JFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -17,11 +19,12 @@ import java.util.Map;
 
 public class JLogin extends JavaPlugin {
 
-    private final Map<Player, Boolean> loginPlayer;
+    private final Map<Player, Status> loginStatus;
 
     public JLogin() {
-        loginPlayer = new HashMap<>();
+        loginStatus = new HashMap<>();
     }
+
     @Override
     public void onEnable() {
 
@@ -39,20 +42,15 @@ public class JLogin extends JavaPlugin {
                 new LoginCommand(this);
         getCommand("login").setExecutor(loginCommand);
 
-        AsyncPlayerChatListener asyncPlayerChatListener =
-                new AsyncPlayerChatListener(this);
+        BukkitListener bukkitListener =
+                new BukkitListener(this);
         getServer().getPluginManager().registerEvents(
-                asyncPlayerChatListener, this);
+                bukkitListener, this);
 
-        PlayerCommandPreProcessListener playerCommandPreProcessListener =
-                new PlayerCommandPreProcessListener(this);
+        JLoginListener jLoginListener =
+                new JLoginListener(this);
         getServer().getPluginManager().registerEvents(
-                playerCommandPreProcessListener, this);
-
-        PlayerMoveListener playerMoveListener =
-                new PlayerMoveListener(this);
-        getServer().getPluginManager().registerEvents(
-                playerMoveListener, this);
+                jLoginListener, this);
 
         LoggerContext context = (LoggerContext) LogManager
                 .getContext(false);
@@ -70,7 +68,7 @@ public class JLogin extends JavaPlugin {
         getLogger().info("JLogin by JoseMarcellio");
     }
 
-    public Map<Player, Boolean> getLoginPlayer() {
-        return loginPlayer;
+    public Map<Player, Status> getLoginStatus() {
+        return loginStatus;
     }
 }

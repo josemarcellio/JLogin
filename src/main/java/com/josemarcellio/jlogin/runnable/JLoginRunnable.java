@@ -1,34 +1,36 @@
-package com.josemarcellio.jlogin.listener;
+package com.josemarcellio.jlogin.runnable;
 
 import com.josemarcellio.jlogin.JLogin;
+import com.josemarcellio.jlogin.api.events.JLoginEvent;
+import com.josemarcellio.jlogin.api.status.Status;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.UUID;
 
-public class AsyncPlayerChatListener
-        implements Listener {
+public class JLoginRunnable extends BukkitRunnable {
+
+    private final Player player;
+
+    private final JLoginEvent event;
 
     private final JLogin plugin;
 
-    public AsyncPlayerChatListener(
-            JLogin plugin) {
+    public JLoginRunnable(
+            JLogin plugin, Player player, JLoginEvent event) {
         this.plugin = plugin;
+        this.player = player;
+        this.event = event;
     }
 
-    @EventHandler
-    public void onAsyncPlayerChat(
-            AsyncPlayerChatEvent event) {
+    @Override
+    public void run() {
 
-        Player player = event.getPlayer();
         UUID playerId = player.getUniqueId();
-
         File playerFile = new File(plugin
                 .getDataFolder(), "/data/playerdata.yml");
 
@@ -37,10 +39,8 @@ public class AsyncPlayerChatListener
 
         FileConfiguration configuration = plugin.getConfig();
 
-        if (!(plugin.getLoginPlayer().containsKey(player))) {
-
+        if (event.getStatus() == Status.PRE) {
             if (!playerData.contains("playerdata." + playerId)) {
-
                 String notRegistered = configuration
                         .getString("Messages.Not-Registered");
 
@@ -56,8 +56,8 @@ public class AsyncPlayerChatListener
                         ChatColor.translateAlternateColorCodes('&',
                                 notLoggedIn));
             }
-            event.setCancelled(true);
+        } else {
+            cancel();
         }
     }
-
 }
