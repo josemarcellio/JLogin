@@ -22,11 +22,15 @@ public class JLoginRunnable extends BukkitRunnable {
 
     private final JLogin plugin;
 
+    private int timeOutTime;
+
     public JLoginRunnable(
             JLogin plugin, Player player, JLoginEvent event) {
         this.plugin = plugin;
         this.player = player;
         this.event = event;
+        this.timeOutTime = plugin.getConfig()
+                .getInt("TimeOut.Delay");
     }
 
     @Override
@@ -46,6 +50,17 @@ public class JLoginRunnable extends BukkitRunnable {
         }
 
         if (event.getStatus() == Status.PRE) {
+            timeOutTime--;
+            if (timeOutTime < 1) {
+
+                String timeOut = configuration
+                        .getString("TimeOut.Kick-Messages");
+                player.kickPlayer(
+                        ChatColor.translateAlternateColorCodes('&',
+                                timeOut));
+                cancel();
+            }
+
             if (!playerData.contains("playerdata." + playerId)) {
 
                 List<String> notRegistered = configuration
@@ -53,7 +68,9 @@ public class JLoginRunnable extends BukkitRunnable {
 
                 notRegistered.replaceAll(line ->
                         line.replace("{captcha}",
-                                plugin.getCaptcha().get(player)));
+                                plugin.getCaptcha().get(player))
+                                .replace("{timeout}",
+                                        String.valueOf(timeOutTime)));
 
                 Utility.sendMessage(
                         player, notRegistered);
@@ -63,7 +80,9 @@ public class JLoginRunnable extends BukkitRunnable {
 
                 titlesNotRegistered = titlesNotRegistered
                         .replace("{captcha}",
-                                plugin.getCaptcha().get(player));
+                                plugin.getCaptcha().get(player))
+                        .replace("{timeout}",
+                                String.valueOf(timeOutTime));
 
                 Utility.sendTitle(
                         player, titlesNotRegistered);
@@ -75,7 +94,9 @@ public class JLoginRunnable extends BukkitRunnable {
 
                 notLoggedIn.replaceAll(line ->
                         line.replace("{captcha}",
-                                plugin.getCaptcha().get(player)));
+                                plugin.getCaptcha().get(player))
+                                .replace("{timeout}",
+                                        String.valueOf(timeOutTime)));
 
                 Utility.sendMessage(player, notLoggedIn);
 
@@ -84,7 +105,9 @@ public class JLoginRunnable extends BukkitRunnable {
 
                 titlesNotLoggedIn = titlesNotLoggedIn
                         .replace("{captcha}",
-                                plugin.getCaptcha().get(player));
+                                plugin.getCaptcha().get(player))
+                        .replace("{timeout}",
+                                String.valueOf(timeOutTime));
 
                 Utility.sendTitle(
                         player, titlesNotLoggedIn);

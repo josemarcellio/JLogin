@@ -68,7 +68,8 @@ public class ChangePasswordSubCommand extends SubCommand {
                 sender.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
                                 "&6&lJLogin &7> &eSuccessfully changed "
-                                        + targetPlayer.getName() + " password"));
+                                        + targetPlayer.getName()
+                                        + " password"));
 
             } else {
 
@@ -81,7 +82,8 @@ public class ChangePasswordSubCommand extends SubCommand {
 
             sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
-                            "&6&lJLogin &7> &eUsage: /jlogin changepassword <player> <password>"));
+                            "&6&lJLogin &7> &eUsage: " +
+                                    "/jlogin changepassword <player> <password>"));
         }
     }
 }

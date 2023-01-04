@@ -6,7 +6,6 @@ import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.MessageDigestUtils;
 import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -92,8 +91,10 @@ public class LoginCommand
 
                         Utility.sendMessage(player, successfullyLoggedIn);
 
-                        JLoginEvent jloginEvent = new JLoginEvent(plugin, player, Status.LOGIN);
-                        Bukkit.getServer().getPluginManager().callEvent(jloginEvent);
+                        JLoginEvent jloginEvent = new JLoginEvent(plugin,
+                                player, Status.LOGIN);
+                        Bukkit.getServer().getPluginManager().callEvent(
+                                jloginEvent);
 
                     } else {
 

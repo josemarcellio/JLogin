@@ -1,5 +1,22 @@
+Task:
+  Delay: 40
+  Period: 40
+TimeOut:
+  Delay: 60
+  Kick-Messages: "&4Login timeout, you have been kicked from the server!"
+
 #set to [] to disable messages
 Messages:
+  Help-Command:
+    - "&8&m                                                                          &8"
+    - ""
+    - "&6&lJLogin &7> &eAdmin: &e/jlogin unregister - /jlogin changepassword"
+    - "&6&lJLogin &7> &ePlayer: /register - /login - /changepassword"
+    - ""
+    - "&6&lJLogin &7> &ePlugin by JoseMarcellio"
+    - "&6&lJLogin &7> &ehttps://github.com/josemarcellio/JLogin"
+    - ""
+    - "&8&m                                                                          &8"
   Already-Registered:
     - "&aYou are already registered!"
   Successfully-Registered:
@@ -37,7 +54,7 @@ Messages:
 
 #set to "" to disable titles
 Titles:
-  Registered: "&a&lJLogin | &eSuccessfully registered"
-  Not-Registered: "&a&lJLogin | &eYour captcha: &c{captcha}"
-  Logged-In: "&a&lJLogin | &eSuccessfully logged in"
-  Not-Logged-In: "&a&lJLogin | &eYour captcha: &c{captcha}"
+  Registered: "&a&lRegistered | &eSuccessfully registered"
+  Not-Registered: "&a&l{timeout} | &eYour captcha: &c{captcha}"
+  Logged-In: "&a&lLogged In | &eSuccessfully logged in"
+  Not-Logged-In: "&a&l{timeout} | &eYour captcha: &c{captcha}"

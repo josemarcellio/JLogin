@@ -99,8 +99,10 @@ public class RegisterCommand
 
                     Utility.sendMessage(player, successfullyRegistered);
 
-                    JLoginEvent jloginEvent = new JLoginEvent(plugin, player, Status.REGISTER);
-                    Bukkit.getServer().getPluginManager().callEvent(jloginEvent);
+                    JLoginEvent jloginEvent = new JLoginEvent(plugin,
+                            player, Status.REGISTER);
+                    Bukkit.getServer().getPluginManager().callEvent(
+                            jloginEvent);
 
                 } else {
 

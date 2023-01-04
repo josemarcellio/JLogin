@@ -55,7 +55,8 @@ public class UnregisterSubCommand extends SubCommand {
 
                 sender.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
-                                "&6&lJLogin &7> &e" + targetPlayer.getName()
+                                "&6&lJLogin &7> &e"
+                                        + targetPlayer.getName()
                                         + " has been unregistered"));
 
             } else {
@@ -63,13 +64,15 @@ public class UnregisterSubCommand extends SubCommand {
                 sender.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
                                 "&6&lJLogin &7> &ePlayer with name "
-                                        + targetPlayer.getName() + " not found!"));
+                                        + targetPlayer.getName()
+                                        + " not found!"));
             }
         } else {
 
             sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
-                            "&6&lJLogin &7> &eUsage: /jlogin unregister <player>"));
+                            "&6&lJLogin &7> &eUsage: " +
+                                    "/jlogin unregister <player>"));
             }
         }
     }

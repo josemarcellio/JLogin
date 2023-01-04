@@ -28,8 +28,11 @@ public class JLoginListener
 
         FileConfiguration configuration = plugin.getConfig();
 
+        long delay = configuration.getLong("Task.Delay");
+        long period = configuration.getLong("Task.Period");
+
         new JLoginRunnable(plugin, player, event)
-                .runTaskTimer(plugin, 40L, 40L);
+                .runTaskTimer(plugin, delay, period);
 
 
         if (event.getStatus() == Status.REGISTER) {

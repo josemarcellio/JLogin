@@ -2,6 +2,7 @@ package com.josemarcellio.jlogin.util;
 
 import com.cryptomorin.xseries.messages.Titles;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -35,6 +36,16 @@ public class Utility {
 
         for (String line : message) {
             player.sendMessage(
+                    ChatColor.translateAlternateColorCodes('&',
+                            line));
+        }
+    }
+
+    public static void sendMessage(
+            CommandSender sender, List<String> message) {
+
+        for (String line : message) {
+            sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
                             line));
         }

@@ -5,10 +5,14 @@ import com.josemarcellio.jlogin.api.command.SubCommand;
 import com.josemarcellio.jlogin.command.subcommand.ChangePasswordSubCommand;
 import com.josemarcellio.jlogin.command.subcommand.ReloadSubCommand;
 import com.josemarcellio.jlogin.command.subcommand.UnregisterSubCommand;
+import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.List;
 
 public class JLoginCommand
         implements CommandExecutor {
@@ -25,20 +29,23 @@ public class JLoginCommand
             CommandSender sender, Command command, String label,
             String[] args) {
 
+        FileConfiguration configuration = plugin.getConfig();
+
+        List<String> helpCommand = configuration
+                .getStringList("Messages.Help-Command");
+
         if (args.length == 0) {
 
-            sender.sendMessage(
-                    ChatColor.translateAlternateColorCodes('&',
-                            "&6&lJLogin &7> &e/jlogin changepassword|unregister"));
+            Utility.sendMessage(sender, helpCommand);
+
             return true;
         }
 
         SubCommand subCommand = getSubCommand(args[0]);
         if (subCommand == null) {
 
-            sender.sendMessage(
-                    ChatColor.translateAlternateColorCodes('&',
-                            "&6&lJLogin &7> &e/jlogin changepassword|unregister"));
+            Utility.sendMessage(sender, helpCommand);
+
             return true;
         }
 
