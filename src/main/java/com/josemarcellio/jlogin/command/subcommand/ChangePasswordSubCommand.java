@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import javax.xml.bind.DatatypeConverter;
@@ -38,8 +37,6 @@ public class ChangePasswordSubCommand extends SubCommand {
     public void execute(
             CommandSender sender, String[] args) {
 
-        FileConfiguration configuration = plugin.getConfig();
-
         if (args.length == 3) {
             OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[1]);
             UUID targetId = targetPlayer.getUniqueId();
@@ -68,34 +65,23 @@ public class ChangePasswordSubCommand extends SubCommand {
                     e.printStackTrace();
                 }
 
-                String passwordChanged = configuration
-                        .getString("Messages.Password-Changed-Other");
-
-                passwordChanged = passwordChanged
-                        .replace("{player}", targetPlayer.getName());
-
                 sender.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
-                                passwordChanged));
+                                "&6&lJLogin &7> &eSuccessfully changed "
+                                        + targetPlayer.getName() + " password"));
 
             } else {
-                String unknownPlayer = configuration
-                        .getString("Messages.Player-Not-Found");
-
-                unknownPlayer = unknownPlayer
-                        .replace("{player}", targetPlayer.getName());
 
                 sender.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
-                                unknownPlayer));
+                                "&6&lJLogin &7> &ePlayer with name "
+                                        + targetPlayer.getName() + " not found!"));
             }
         } else {
-            String changePasswordOtherUsage = configuration
-                    .getString("Messages.Change-Password-Other-Usage");
 
             sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
-                            changePasswordOtherUsage));
+                            "&6&lJLogin &7> &eUsage: /jlogin changepassword <player> <password>"));
         }
     }
 }

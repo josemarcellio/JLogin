@@ -3,12 +3,12 @@ package com.josemarcellio.jlogin.command;
 import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.command.SubCommand;
 import com.josemarcellio.jlogin.command.subcommand.ChangePasswordSubCommand;
+import com.josemarcellio.jlogin.command.subcommand.ReloadSubCommand;
 import com.josemarcellio.jlogin.command.subcommand.UnregisterSubCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 
 public class JLoginCommand
         implements CommandExecutor {
@@ -25,16 +25,11 @@ public class JLoginCommand
             CommandSender sender, Command command, String label,
             String[] args) {
 
-        FileConfiguration configuration = plugin.getConfig();
-
-        String messagesHelp = configuration
-                .getString("Messages.JLogin-Help");
-
         if (args.length == 0) {
 
             sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
-                            messagesHelp));
+                            "&6&lJLogin &7> &e/jlogin changepassword|unregister"));
             return true;
         }
 
@@ -43,19 +38,15 @@ public class JLoginCommand
 
             sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
-                            messagesHelp));
+                            "&6&lJLogin &7> &e/jlogin changepassword|unregister"));
             return true;
         }
 
         if (!sender.hasPermission(subCommand.getPermission())) {
-            String messagesNoPermission = configuration
-                    .getString("Messages.No-Permission");
-            messagesNoPermission = messagesNoPermission
-                    .replace("{permission}", subCommand.getPermission());
 
             sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
-                            messagesNoPermission));
+                            "&6&lJLogin &7> &eYou don't have permission!"));
             return true;
         }
 
@@ -66,7 +57,8 @@ public class JLoginCommand
     private SubCommand getSubCommand(String commandName) {
         SubCommand[] subCommands = {
                 new ChangePasswordSubCommand(plugin),
-                new UnregisterSubCommand(plugin)
+                new UnregisterSubCommand(plugin),
+                new ReloadSubCommand(plugin)
         };
 
         for (SubCommand subCommand : subCommands) {

@@ -23,8 +23,11 @@ public class JLogin extends JavaPlugin {
 
     private final Map<Player, Status> loginStatus;
 
+    private final Map<Player, String> captcha;
+
     public JLogin() {
         loginStatus = new HashMap<>();
+        captcha = new HashMap<>();
     }
 
     @Override
@@ -84,5 +87,9 @@ public class JLogin extends JavaPlugin {
 
     public Map<Player, Status> getLoginStatus() {
         return loginStatus;
+    }
+
+    public Map<Player, String> getCaptcha() {
+        return captcha;
     }
 }

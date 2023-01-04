@@ -1,26 +1,43 @@
+#set to [] to disable messages
 Messages:
-  JLogin-Help: "&7[&bJLogin&7] &f/jlogin unregister|changepassword"
-  No-Permission: "&7[&bJLogin&7] &fYou don't have permission: {permission} !"
+  Already-Registered:
+    - "&aYou are already registered!"
+  Successfully-Registered:
+    - "&aSuccessfully registered!"
+  Registered-Usage:
+    - "&6&lJLogin &7> &e/register <password> {captcha}"
+  Already-Logged-In:
+    - "&aYou are already logged in!"
+  Successfully-Logged-In:
+    - "&aSuccessfully logged in!"
+  Login-Usage:
+    - "&6&lJLogin &7> &eUsage: /login <password> {captcha}"
+  Wrong-Password:
+    - "&cWrong password! Please try again!"
+  Not-Registered:
+    - "&8&m                                                                          &8"
+    - ""
+    - "      &eYou are not registered!"
+    - "      &a/register <password> &c{captcha}"
+    - ""
+    - "&8&m                                                                          &8"
+  Not-Logged-In:
+    - "&8&m                                                                          &8"
+    - ""
+    - "      &eYou are not logged in!"
+    - "      &a/login <password> &c{captcha}"
+    - ""
+    - "&8&m                                                                          &8"
+  Change-Password-Usage:
+    - "&6&lJLogin &7> &eUsage: /changepassword <oldpassword> <newpassword>"
+  Password-Changed:
+    - "&aSuccessfully changed your password!"
+  Wrong-Captcha:
+    - "&cWrong Captcha!, please try again!"
 
-  Already-Registered: "&7[&bJLogin&7] &fYou are already registered!"
-  Successfully-Registered: "&7[&bJLogin&7] &fSuccessfully registered!"
-  Registered-Usage: "&7[&bJLogin&7] &fUsage: /register <password>"
-
-  Already-Logged-In: "&7[&bJLogin&7] &fYou are already logged in!"
-  Successfully-Logged-In: "&7[&bJLogin&7] &fSuccessfully logged in!"
-  Login-Usage: "&7[&bJLogin&7] &fUsage: /login <password>"
-
-  Wrong-Password: "&7[&bJLogin&7] &fWrong password! Please try again!"
-
-  Not-Registered: "&7[&bJLogin&7] &fYou are not registered! Please type /register <password> to register"
-  Not-Logged-In: "&7[&bJLogin&7] &fYou are not logged in! Please type /login <password> to log in"
-
-  Change-Password-Usage: "&7[&bJLogin&7] &fUsage: /changepassword <oldpassword> <newpassword>"
-  Change-Password-Other-Usage: "&7[&bJLogin&7] &fUsage: /jlogin changepassword <player> <newpassword>"
-  Password-Changed: "&7[&bJLogin&7] &fSuccessfully changed your password!"
-  Password-Changed-Other: "&7[&bJLogin&7] &fSuccessfully changed {player} password!"
-
-  Unregister-Usage: "&7[&bJLogin&7] &fUsage: /jlogin unregister <player>"
-  Unregistered-Player: "&7[&bJLogin&7] {player} has been unregistered"
-
-  Player-Not-Found: "&7[&bJLogin&7] &f{player} is not registered in the database!"
+#set to "" to disable titles
+Titles:
+  Registered: "&a&lJLogin | &eSuccessfully registered"
+  Not-Registered: "&a&lJLogin | &eYour captcha: &c{captcha}"
+  Logged-In: "&a&lJLogin | &eSuccessfully logged in"
+  Not-Logged-In: "&a&lJLogin | &eYour captcha: &c{captcha}"

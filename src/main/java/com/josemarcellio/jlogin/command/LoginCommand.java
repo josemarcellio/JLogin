@@ -4,6 +4,7 @@ import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.events.JLoginEvent;
 import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.MessageDigestUtils;
+import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class LoginCommand
@@ -46,19 +48,27 @@ public class LoginCommand
 
             if (plugin.getLoginStatus().get(player) != Status.PRE) {
 
-                String alreadyLoggedIn = configuration
-                        .getString("Messages.Already-Logged-In");
+                List<String> alreadyLoggedIn = configuration
+                        .getStringList("Messages.Already-Logged-In");
 
-                player.sendMessage(
-                        ChatColor.translateAlternateColorCodes('&',
-                                alreadyLoggedIn));
+                Utility.sendMessage(player, alreadyLoggedIn);
                 return true;
             }
 
             if (playerData.contains("playerdata." + playerId.toString())) {
 
-                if (args.length == 1) {
+                if (args.length == 2) {
                     String password = args[0];
+                    String enteredCaptcha = args[1];
+
+                    String expectedCaptcha = plugin.getCaptcha().get(player);
+                    if (!enteredCaptcha.equals(expectedCaptcha)) {
+                        List<String> wrongCaptcha = configuration
+                                .getStringList("Messages.Wrong-Captcha");
+
+                        Utility.sendMessage(player, wrongCaptcha);
+                        return true;
+                    }
 
                     String storedHashedPasswordString = playerData
                             .getString("playerdata." + playerId + ".password");
@@ -77,42 +87,38 @@ public class LoginCommand
                         plugin.getLoginStatus().put(
                                 player, Status.LOGIN);
 
-                        String successfullyLoggedIn = configuration
-                                .getString("Messages.Successfully-Logged-In");
+                        List<String> successfullyLoggedIn = configuration
+                                .getStringList("Messages.Successfully-Logged-In");
 
-                        player.sendMessage(
-                                ChatColor.translateAlternateColorCodes('&',
-                                        successfullyLoggedIn));
+                        Utility.sendMessage(player, successfullyLoggedIn);
 
                         JLoginEvent jloginEvent = new JLoginEvent(plugin, player, Status.LOGIN);
                         Bukkit.getServer().getPluginManager().callEvent(jloginEvent);
 
                     } else {
 
-                        String wrongPassword = configuration
-                                .getString("Messages.Wrong-Password");
+                        List<String> wrongPassword = configuration
+                                .getStringList("Messages.Wrong-Password");
 
-                        player.sendMessage(
-                                ChatColor.translateAlternateColorCodes('&',
-                                        wrongPassword));
+                        Utility.sendMessage(player, wrongPassword);
                     }
                 } else {
 
-                    String loginUsage = configuration
-                            .getString("Messages.Login-Usage");
+                    List<String> loginUsage = configuration
+                            .getStringList("Messages.Login-Usage");
 
-                    player.sendMessage(
-                            ChatColor.translateAlternateColorCodes('&',
-                                    loginUsage));
+                    loginUsage.replaceAll(line ->
+                            line.replace("{captcha}",
+                                    plugin.getCaptcha().get(player)));
+
+                    Utility.sendMessage(player, loginUsage);
                 }
             } else {
 
-                String notRegistered = configuration
-                        .getString("Messages.Not-Registered");
+                List<String> notRegistered = configuration
+                        .getStringList("Messages.Not-Registered");
 
-                player.sendMessage(
-                        ChatColor.translateAlternateColorCodes('&',
-                                notRegistered));
+                Utility.sendMessage(player, notRegistered);
             }
         } else {
             sender.sendMessage("Only player can use this command!");

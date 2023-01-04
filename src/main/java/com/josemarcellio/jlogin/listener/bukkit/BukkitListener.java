@@ -3,6 +3,7 @@ package com.josemarcellio.jlogin.listener.bukkit;
 import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.events.JLoginEvent;
 import com.josemarcellio.jlogin.api.status.Status;
+import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,11 @@ public class BukkitListener
             PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
+
+        this.plugin.getCaptcha().put(
+                player, RandomStringUtils
+                        .randomAlphanumeric(7));
+
         JLoginEvent jloginEvent = new JLoginEvent(plugin,
                 player, Status.PRE);
 

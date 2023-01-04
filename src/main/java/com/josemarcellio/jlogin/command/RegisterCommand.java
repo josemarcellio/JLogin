@@ -4,6 +4,7 @@ import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.events.JLoginEvent;
 import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.MessageDigestUtils;
+import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 public class RegisterCommand
@@ -46,19 +48,27 @@ public class RegisterCommand
 
             if (plugin.getLoginStatus().get(player) != Status.PRE) {
 
-                String alreadyLoggedIn = configuration
-                        .getString("Messages.Already-Logged-In");
+                List<String> alreadyLoggedIn = configuration
+                        .getStringList("Messages.Already-Logged-In");
 
-                player.sendMessage(
-                        ChatColor.translateAlternateColorCodes('&',
-                                alreadyLoggedIn));
+                Utility.sendMessage(player, alreadyLoggedIn);
                 return true;
             }
 
             if (!playerData.contains("playerdata." + playerId.toString())) {
 
-                if (args.length == 1) {
+                if (args.length == 2) {
                     String password = args[0];
+                    String enteredCaptcha = args[1];
+
+                    String expectedCaptcha = plugin.getCaptcha().get(player);
+                    if (!enteredCaptcha.equals(expectedCaptcha)) {
+                        List<String> wrongCaptcha = configuration
+                                .getStringList("Messages.Wrong-Captcha");
+
+                        Utility.sendMessage(player, wrongCaptcha);
+                        return true;
+                    }
 
                     byte[] hashedPassword =
                             MessageDigestUtils.getSHA256Hash(
@@ -84,33 +94,31 @@ public class RegisterCommand
                     plugin.getLoginStatus().put(
                             player, Status.REGISTER);
 
-                    String successfullyRegistered = configuration
-                            .getString("Messages.Successfully-Registered");
+                    List<String> successfullyRegistered = configuration
+                            .getStringList("Messages.Successfully-Registered");
 
-                    player.sendMessage(
-                            ChatColor.translateAlternateColorCodes('&',
-                                    successfullyRegistered));
+                    Utility.sendMessage(player, successfullyRegistered);
 
                     JLoginEvent jloginEvent = new JLoginEvent(plugin, player, Status.REGISTER);
                     Bukkit.getServer().getPluginManager().callEvent(jloginEvent);
 
                 } else {
 
-                    String registeredUsage = configuration
-                            .getString("Messages.Registered-Usage");
+                    List<String> registeredUsage = configuration
+                            .getStringList("Messages.Registered-Usage");
 
-                    player.sendMessage(
-                            ChatColor.translateAlternateColorCodes('&',
-                                    registeredUsage));
+                    registeredUsage.replaceAll(line ->
+                            line.replace("{captcha}",
+                                    plugin.getCaptcha().get(player)));
+
+                    Utility.sendMessage(player, registeredUsage);
                 }
             } else {
 
-                String alreadyRegistered = configuration
-                        .getString("Messages.Already-Registered");
+                List<String> alreadyRegistered = configuration
+                        .getStringList("Messages.Already-Registered");
 
-                player.sendMessage(
-                        ChatColor.translateAlternateColorCodes('&',
-                                alreadyRegistered));
+                Utility.sendMessage(player, alreadyRegistered);
             }
         } else {
             sender.sendMessage("Only player can use this command!");

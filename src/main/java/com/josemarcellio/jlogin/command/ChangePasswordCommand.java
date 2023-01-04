@@ -3,7 +3,7 @@ package com.josemarcellio.jlogin.command;
 import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.MessageDigestUtils;
-import org.bukkit.ChatColor;
+import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 public class ChangePasswordCommand
@@ -44,12 +45,10 @@ public class ChangePasswordCommand
 
             if (plugin.getLoginStatus().get(player) == Status.PRE) {
 
-                String alreadyLoggedIn = configuration
-                        .getString("Messages.Not-Logged-In");
+                List<String> alreadyLoggedIn = configuration
+                        .getStringList("Messages.Not-Logged-In");
 
-                player.sendMessage(
-                        ChatColor.translateAlternateColorCodes('&',
-                                alreadyLoggedIn));
+                Utility.sendMessage(player, alreadyLoggedIn);
                 return true;
             }
 
@@ -84,27 +83,21 @@ public class ChangePasswordCommand
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    String passwordChanged = configuration
-                            .getString("Messages.Password-Changed");
+                    List<String> passwordChanged = configuration
+                            .getStringList("Messages.Password-Changed");
 
-                    player.sendMessage(
-                            ChatColor.translateAlternateColorCodes('&',
-                                    passwordChanged));
+                    Utility.sendMessage(player, passwordChanged);
                 } else {
-                    String incorrectPassword = configuration
-                            .getString("Messages.Wrong-Password");
+                    List<String> incorrectPassword = configuration
+                            .getStringList("Messages.Wrong-Password");
 
-                    player.sendMessage(
-                            ChatColor.translateAlternateColorCodes('&',
-                                    incorrectPassword));
+                    Utility.sendMessage(player, incorrectPassword);
                 }
             } else {
-                String changePasswordUsage = configuration
-                        .getString("Messages.Change-Password-Usage");
+                List<String> changePasswordUsage = configuration
+                        .getStringList("Messages.Change-Password-Usage");
 
-                player.sendMessage(
-                        ChatColor.translateAlternateColorCodes('&',
-                                changePasswordUsage));
+                Utility.sendMessage(player, changePasswordUsage);
             }
         } else {
             sender.sendMessage("Only player can use this command!");

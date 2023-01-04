@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -36,7 +35,6 @@ public class UnregisterSubCommand extends SubCommand {
     public void execute(
             CommandSender sender, String[] args) {
 
-        FileConfiguration configuration = plugin.getConfig();
         if (args.length == 2) {
             OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(args[1]);
             UUID targetId = targetPlayer.getUniqueId();
@@ -55,34 +53,23 @@ public class UnregisterSubCommand extends SubCommand {
                     e.printStackTrace();
                 }
 
-                String unregisteredPlayer = configuration
-                        .getString("Messages.Unregistered-Player");
-
-                unregisteredPlayer = unregisteredPlayer
-                        .replace("{player}", targetPlayer.getName());
-
                 sender.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
-                                unregisteredPlayer));
+                                "&6&lJLogin &7> &e" + targetPlayer.getName()
+                                        + " has been unregistered"));
 
             } else {
-                String unknownPlayer = configuration
-                        .getString("Messages.Player-Not-Found");
-
-                unknownPlayer = unknownPlayer
-                        .replace("{player}", targetPlayer.getName());
 
                 sender.sendMessage(
                         ChatColor.translateAlternateColorCodes('&',
-                                unknownPlayer));
+                                "&6&lJLogin &7> &ePlayer with name "
+                                        + targetPlayer.getName() + " not found!"));
             }
         } else {
-            String unregisteredUsage = configuration
-                    .getString("Messages.Unregister-Usage");
 
             sender.sendMessage(
                     ChatColor.translateAlternateColorCodes('&',
-                            unregisteredUsage));
+                            "&6&lJLogin &7> &eUsage: /jlogin unregister <player>"));
             }
         }
     }

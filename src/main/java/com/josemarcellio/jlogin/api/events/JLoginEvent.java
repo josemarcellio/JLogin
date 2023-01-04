@@ -16,8 +16,8 @@ public class JLoginEvent extends Event {
 
     public JLoginEvent(
             JLogin plugin, Player player, Status status) {
-        this.player = player;
         this.plugin = plugin;
+        this.player = player;
         this.plugin.getLoginStatus().put(
                 player, status);
     }
