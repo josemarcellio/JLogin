@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class MessageDigestUtils {
 
-    public static byte[] getSHA256Hash(
+    public byte[] getSHA256Hash(
             String input) {
 
         try {
@@ -22,4 +22,37 @@ public class MessageDigestUtils {
         return null;
     }
 
+    public byte[] getMD5Hash(
+            String input) {
+
+        try {
+            MessageDigest messageDigest = MessageDigest
+                    .getInstance("MD5");
+
+            messageDigest.update(
+                    input.getBytes());
+
+            return messageDigest.digest();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public byte[] getSHA512Hash(
+            String input) {
+
+        try {
+            MessageDigest messageDigest = MessageDigest
+                    .getInstance("SHA-512");
+
+            messageDigest.update(
+                    input.getBytes());
+
+            return messageDigest.digest();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

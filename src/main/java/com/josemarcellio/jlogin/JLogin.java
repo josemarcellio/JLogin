@@ -1,10 +1,12 @@
 package com.josemarcellio.jlogin;
 
 import com.josemarcellio.jlogin.api.status.Status;
+import com.josemarcellio.jlogin.captcha.Captcha;
 import com.josemarcellio.jlogin.command.ChangePasswordCommand;
 import com.josemarcellio.jlogin.command.JLoginCommand;
 import com.josemarcellio.jlogin.command.LoginCommand;
 import com.josemarcellio.jlogin.command.RegisterCommand;
+import com.josemarcellio.jlogin.encryption.Encryption;
 import com.josemarcellio.jlogin.listener.*;
 import com.josemarcellio.jlogin.listener.bukkit.BukkitListener;
 import com.josemarcellio.jlogin.log4j.Log4JFilter;
@@ -25,6 +27,10 @@ public class JLogin extends JavaPlugin {
 
     private final Map<Player, String> captcha;
 
+    private Encryption encryptionMethod;
+
+    private Captcha getCode;
+
     public JLogin() {
         loginStatus = new HashMap<>();
         captcha = new HashMap<>();
@@ -38,6 +44,16 @@ public class JLogin extends JavaPlugin {
         getLogger().info("JLogin by JoseMarcellio");
 
         saveDefaultConfig();
+
+        encryptionMethod = new Encryption(
+                getConfig().getString(
+                        "Encryption-Method"));
+
+        getCode = new Captcha(
+                getConfig().getString(
+                        "Captcha.Type"),
+                getConfig().getInt(
+                        "Captcha.Size"));
 
         RegisterCommand registerCommand =
                 new RegisterCommand(this);
@@ -91,5 +107,13 @@ public class JLogin extends JavaPlugin {
 
     public Map<Player, String> getCaptcha() {
         return captcha;
+    }
+
+    public Encryption getEncryption() {
+        return encryptionMethod;
+    }
+
+    public Captcha getCode() {
+        return getCode;
     }
 }

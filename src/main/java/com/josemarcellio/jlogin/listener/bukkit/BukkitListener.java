@@ -3,8 +3,8 @@ package com.josemarcellio.jlogin.listener.bukkit;
 import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.events.JLoginEvent;
 import com.josemarcellio.jlogin.api.status.Status;
-import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,9 +28,8 @@ public class BukkitListener
 
         Player player = event.getPlayer();
 
-        this.plugin.getCaptcha().put(
-                player, RandomStringUtils
-                        .randomAlphanumeric(7));
+        plugin.getCaptcha().put(
+                player, plugin.getCode().generate());
 
         JLoginEvent jloginEvent = new JLoginEvent(plugin,
                 player, Status.PRE);
@@ -79,7 +78,12 @@ public class BukkitListener
         if (plugin.getLoginStatus()
                 .get(player) == Status.PRE) {
 
-            event.setCancelled(true);
+            Location from = event.getFrom();
+            Location to = event.getTo();
+
+            if (from.getX() != to.getX() || from.getZ() != to.getZ()) {
+                player.teleport(from);
+            }
         }
     }
 

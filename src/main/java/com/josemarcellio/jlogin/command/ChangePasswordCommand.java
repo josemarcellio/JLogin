@@ -2,7 +2,6 @@ package com.josemarcellio.jlogin.command;
 
 import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.status.Status;
-import com.josemarcellio.jlogin.util.MessageDigestUtils;
 import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -57,8 +56,9 @@ public class ChangePasswordCommand
                 String oldPassword = args[0];
                 String newPassword = args[1];
 
-                byte[] oldHashedPassword = MessageDigestUtils
-                        .getSHA256Hash(oldPassword);
+                byte[] oldHashedPassword =
+                        plugin.getEncryption().encryptPassword(
+                                oldPassword);
 
                 String oldHashedPasswordString = DatatypeConverter
                         .printHexBinary(oldHashedPassword);
@@ -69,8 +69,9 @@ public class ChangePasswordCommand
 
                 if (oldHashedPasswordString.equals(storedHashedPassword)) {
 
-                    byte[] newHashedPassword = MessageDigestUtils
-                            .getSHA256Hash(newPassword);
+                    byte[] newHashedPassword =
+                            plugin.getEncryption().encryptPassword(
+                                    newPassword);
 
                     String newHashedPasswordString = DatatypeConverter
                             .printHexBinary(newHashedPassword);

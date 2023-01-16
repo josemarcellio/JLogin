@@ -1,6 +1,6 @@
 name: JLogin
 main: com.josemarcellio.jlogin.JLogin
-version: 1.4
+version: 1.5
 author: JoseMarcellio
 description: A lightweight login system by JoseMarcellio
 commands:

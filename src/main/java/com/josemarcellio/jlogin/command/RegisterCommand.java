@@ -6,7 +6,6 @@ import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.MessageDigestUtils;
 import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -71,7 +70,7 @@ public class RegisterCommand
                     }
 
                     byte[] hashedPassword =
-                            MessageDigestUtils.getSHA256Hash(
+                            plugin.getEncryption().encryptPassword(
                                     password);
 
                     String hashedPasswordString =

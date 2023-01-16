@@ -2,7 +2,6 @@ package com.josemarcellio.jlogin.command.subcommand;
 
 import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.command.SubCommand;
-import com.josemarcellio.jlogin.util.MessageDigestUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -51,8 +50,9 @@ public class ChangePasswordSubCommand extends SubCommand {
             if (playerData.contains("playerdata." + targetId.toString())) {
                 playerData.set("playerdata." + targetId, null);
 
-                byte[] newHashedPassword = MessageDigestUtils
-                        .getSHA256Hash(newPassword);
+                byte[] newHashedPassword =
+                        plugin.getEncryption().encryptPassword(
+                                newPassword);
                 String newHashedPasswordString = DatatypeConverter
                         .printHexBinary(newHashedPassword);
 

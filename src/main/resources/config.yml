@@ -1,6 +1,15 @@
+#sha256, sha512, md5
+Encryption-Method: sha256
+
+#alpha, num, mix
+Captcha:
+  Size: 7
+  Type: mix
+
 Task:
-  Delay: 40
-  Period: 40
+  Delay: 20
+  Period: 20
+
 TimeOut:
   Delay: 60
   Kick-Messages: "&4Login timeout, you have been kicked from the server!"
