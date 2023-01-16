@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.josemarcellio.jlogin'
-version '1.5'
+version '1.6'
 
 repositories {
     mavenCentral()
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    compileOnly 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
     implementation 'org.bstats:bstats-bukkit:3.0.0'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.1'
     compileOnly 'org.apache.logging.log4j:log4j-core:2.19.0'
@@ -23,8 +23,8 @@ dependencies {
 tasks {
 
     shadowJar {
-        relocate("org.bstats", "com.josemarcellio.jlogin.lib.bstats")
-        relocate("com.cryptomorin", "com.josemarcellio.jlogin.lib")
+        relocate("org.bstats", "com.josemarcellio.jlogin.bstats")
+        relocate("com.cryptomorin", "com.josemarcellio.jlogin")
     }
 
     compileJava {

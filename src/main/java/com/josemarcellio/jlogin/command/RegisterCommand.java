@@ -3,7 +3,6 @@ package com.josemarcellio.jlogin.command;
 import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.events.JLoginEvent;
 import com.josemarcellio.jlogin.api.status.Status;
-import com.josemarcellio.jlogin.util.MessageDigestUtils;
 import com.josemarcellio.jlogin.util.Utility;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

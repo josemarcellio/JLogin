@@ -4,7 +4,6 @@ import com.josemarcellio.jlogin.JLogin;
 import com.josemarcellio.jlogin.api.events.JLoginEvent;
 import com.josemarcellio.jlogin.api.status.Status;
 import com.josemarcellio.jlogin.util.Utility;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -56,8 +55,7 @@ public class JLoginRunnable extends BukkitRunnable {
                 String timeOut = configuration
                         .getString("TimeOut.Kick-Messages");
                 player.kickPlayer(
-                        ChatColor.translateAlternateColorCodes('&',
-                                timeOut));
+                        Utility.getColor(timeOut));
                 cancel();
             }
 
